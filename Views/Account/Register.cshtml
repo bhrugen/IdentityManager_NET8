@@ -2,7 +2,7 @@
 
 <div class="row col-md-10 offset-md-1">
     <h1 class="text-primary text-center pt-2">Register</h1>
-    <form method="post" asp-controller="Account" asp-action="Register">
+    <form method="post" asp-controller="Account" asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">
         <div class="border p-2 rounded">
             <p class="text-center">Create a new account</p>
             <div asp-validation-summary="All" class="text-danger"></div>

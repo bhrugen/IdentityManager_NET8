@@ -16,16 +16,19 @@ namespace IdentityManager.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Register()
+        public IActionResult Register(string returnurl = null)
         {
+            ViewData["ReturnUrl"] = returnurl;
             RegisterViewModel registerViewModel = new();
             return View(registerViewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, string returnurl = null)
         {
+            ViewData["ReturnUrl"] = returnurl;
+            returnurl = returnurl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -39,7 +42,7 @@ namespace IdentityManager.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    return LocalRedirect(returnurl);
                 }
 
                 AddErrors(result);
@@ -56,22 +59,25 @@ namespace IdentityManager.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Login()
+        public IActionResult Login(string returnurl = null)
         {
+            ViewData["ReturnUrl"] = returnurl;
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string returnurl = null)
         {
+            ViewData["ReturnUrl"] = returnurl;
+            returnurl = returnurl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
                     lockoutOnFailure:false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return LocalRedirect(returnurl);
                 }
                 else
                 {

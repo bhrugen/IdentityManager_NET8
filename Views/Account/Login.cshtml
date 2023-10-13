@@ -2,7 +2,7 @@
 
 <div class="row col-md-10 offset-md-1">
     <h1 class="text-primary text-center pt-2">Log in</h1>
-    <form method="post" asp-controller="Account" asp-action="Login">
+    <form method="post" asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]">
         <div class="border p-2 rounded">
             <p class="text-center">Create a new account</p>
             <div asp-validation-summary="All" class="text-danger"></div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <a asp-action="Register"> Register as a new user?</a>
+                        <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]"> Register as a new user?</a>
                     </div>
                     <div class="col-6 text-end">
                         <a asp-action="ForgotPassword"> Forgot your password?</a>
