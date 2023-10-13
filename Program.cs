@@ -19,7 +19,9 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Password.RequireDigit = false;
     opt.Password.RequireLowercase = false;
     opt.Password.RequireNonAlphanumeric = false;
-
+    opt.Lockout.MaxFailedAccessAttempts = 3;
+    opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(10000);
+    opt.SignIn.RequireConfirmedEmail = false;
 });
 
 var app = builder.Build();

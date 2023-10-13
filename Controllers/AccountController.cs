@@ -74,11 +74,16 @@ namespace IdentityManager.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe,
-                    lockoutOnFailure:false);
+                    lockoutOnFailure:true);
                 if (result.Succeeded)
                 {
                     return LocalRedirect(returnurl);
                 }
+                if (result.IsLockedOut)
+                {
+                    return View("Lockout");
+                }
+
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -88,6 +93,11 @@ namespace IdentityManager.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult Lockout()
+        {
+            return View();
+        }
 
         private void AddErrors(IdentityResult result)
         {
