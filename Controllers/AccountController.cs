@@ -47,6 +47,16 @@ namespace IdentityManager.Controllers
             return View(model);
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LogOff()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
