@@ -145,6 +145,8 @@ namespace IdentityManager.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult ResetPassword(ResetPasswordViewModel model)
         {
+
+
             return View();
         }
 
