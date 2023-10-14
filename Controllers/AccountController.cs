@@ -130,6 +130,7 @@ namespace IdentityManager.Controllers
                 await _emailSender.SendEmailAsync(model.Email, "Reset Password - Identity Manager",
                                        $"Please reset your password by clicking here: <a href='{callbackurl}'>link</a>");
 
+                return RedirectToAction(nameof(ForgotPasswordConfirmation));
             }
             return View(model);
         }
@@ -143,17 +144,31 @@ namespace IdentityManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ResetPassword(ResetPasswordViewModel model)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    return RedirectToAction(nameof(ResetPasswordConfirmation));
+                }
 
+                var result = await _userManager.ResetPasswordAsync(user, model.Code, model.Password);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(nameof(ResetPasswordConfirmation));
+                }
+                AddErrors(result);
+            }
 
             return View();
         }
 
         [HttpGet]
-        public IActionResult ResetPasswordConfirmation(string code = null)
+        public IActionResult ResetPasswordConfirmation()
         {
-            return code == null ? View("Error") : View();
+            return View();
         }
 
         [HttpGet]
