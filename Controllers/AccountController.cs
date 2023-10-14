@@ -108,7 +108,35 @@ namespace IdentityManager.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string code, string userId)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return View("Error");
+                }
+
+                var result = await _userManager.ConfirmEmailAsync(user,code);
+                if (result.Succeeded)
+                {
+                    return View();
+                }
+                
+            }
+            return View("Error");
+        }
+
+
+        [HttpGet]
         public IActionResult Lockout()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Error()
         {
             return View();
         }
