@@ -141,6 +141,19 @@ namespace IdentityManager.Controllers
         }
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPasswordConfirmation(string code = null)
+        {
+            return code == null ? View("Error") : View();
+        }
+
         [HttpGet]
         public IActionResult ForgotPasswordConfirmation()
         {
