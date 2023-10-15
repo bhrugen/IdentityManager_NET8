@@ -1,0 +1,34 @@
+﻿@model VerifyAuthenticatorViewModel
+
+<div class="row col-md-10 offset-md-1">
+    <h1 class="text-primary text-center pt-2">Verfiy Authenticator Code</h1>
+    <form method="post" asp-controller="Account" asp-action="VerifyAuthenticatorCode" 
+    asp-route-returnurl="@ViewData["ReturnUrl"]">
+        <input asp-for="RememberMe" type="hidden" />
+        <div class="border p-2 rounded">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Code" class="col-12"></label>
+                <div class="col-md-12">
+                    <input asp-for="Code" class="form-control" />
+                    <span asp-validation-for="Code" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group pt-3">
+
+                <div class="col-md-6 offset-md-3">
+                    <button class="btn btn-success form-control" type="submit">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
