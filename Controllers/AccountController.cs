@@ -1,5 +1,6 @@
 ﻿using IdentityManager.Models;
 using IdentityManager.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -215,6 +216,17 @@ namespace IdentityManager.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> EnableAuthenticator()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+            var token = await _userManager.GetAuthenticatorKeyAsync(user);
+            var model = new TwoFactorAuthenticationViewModel() { Token = token };
+            return View(model);
+        }
 
         private void AddErrors(IdentityResult result)
         {
