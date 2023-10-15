@@ -6,6 +6,10 @@
         <div class="border p-2 rounded">
             <p class="text-center">Please enter the code below in your authenticator App.</p>
             <p class="text-center">@Model.Token</p>
+            <p class="text-center">
+                Alternatively, scan the below QRCode with your mobile phone.
+            </p>
+            <div class="text-center" id="qrCode"></div>
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Code" class="col-12"></label>
@@ -29,6 +33,10 @@
 
 @section Scripts {
     @{
+        <script src="~/js/qrcode.js"></script>
+        <script type="text/javascript">
+            new QRCode(document.getElementById("qrCode"), "@Model.QRCodeUrl");
+        </script>
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
