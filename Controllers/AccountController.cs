@@ -237,6 +237,13 @@ namespace IdentityManager.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        public IActionResult NoAccess()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View();
