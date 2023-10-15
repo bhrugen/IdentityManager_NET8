@@ -127,6 +127,34 @@ namespace IdentityManager.Controllers
 
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> VerifyAuthenticatorCode(VerifyAuthenticatorViewModel model)
+        {
+            
+            model.ReturnUrl= model.ReturnUrl ?? Url.Content("~/");
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+                var result = await _signInManager.TwoFactorAuthenticatorSignInAsync(model.Code, model.RememberMe,
+                    rememberClient:false);
+                if (result.Succeeded)
+                {
+                    return LocalRedirect(model.ReturnUrl);
+                }
+                
+                if (result.IsLockedOut)
+                {
+                    return View("Lockout");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return View(model);
+                }
+        }
+
 
 
         [HttpGet]
