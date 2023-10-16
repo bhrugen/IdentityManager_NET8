@@ -40,9 +40,11 @@
                 </div>
                 
                 
-                <div class="form-group pt-3">
-
-                    <div class="col-md-6 offset-md-3">
+                <div class="form-group pt-3 row">
+                    <div class="col-md-6">
+                        <a class="btn btn-secondary w-100" asp-action="Index">Back to List</a>
+                    </div>
+                    <div class="col-md-6 ">
                         @if (Model != null && !String.IsNullOrEmpty(Model.Id))
                         {
                             <input type="submit" class="btn btn-success w-100" value="Update" />
