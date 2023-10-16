@@ -4,10 +4,11 @@
     var title = "Create Role";
 }
 <form method="post">
-    @if(Model!=null && !String.IsNullOrEmpty(Model.Id))
+    @if (Model != null && !String.IsNullOrEmpty(Model.NormalizedName))
     {
         title = "Edit Role";
         <input asp-for="@Model.Id" hidden />
+        <input asp-for="@Model.NormalizedName" hidden />
     }
     <br />
 <div class="card shadow border-0 mt-4">
@@ -20,9 +21,9 @@
     </div>
     <div class="card-body p-4">
             <div class="border p-2 rounded">
-               
-                
-                 @if(Model!=null && !String.IsNullOrEmpty(Model.Id))
+
+
+                @if (Model != null && !String.IsNullOrEmpty(Model.NormalizedName))
     {
                 <div class="form-group">
                     <label asp-for="Id" class="col-12"></label>
@@ -45,7 +46,7 @@
                         <a class="btn btn-secondary w-100" asp-action="Index">Back to List</a>
                     </div>
                     <div class="col-md-6 ">
-                        @if (Model != null && !String.IsNullOrEmpty(Model.Id))
+                        @if (Model != null && !String.IsNullOrEmpty(Model.NormalizedName))
                         {
                             <input type="submit" class="btn btn-success w-100" value="Update" />
                         }
