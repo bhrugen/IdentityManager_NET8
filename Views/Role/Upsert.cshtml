@@ -1,0 +1,60 @@
+﻿@model Microsoft.AspNetCore.Identity.IdentityRole
+
+@{
+    var title = "Create Role";
+}
+<form method="post">
+    @if(Model!=null && !String.IsNullOrEmpty(Model.Id))
+    {
+        title = "Edit Role";
+        <input asp-for="@Model.Id" hidden />
+    }
+    <br />
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-success bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-white py-2">@title</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+            <div class="border p-2 rounded">
+               
+                
+                 @if(Model!=null && !String.IsNullOrEmpty(Model.Id))
+    {
+                <div class="form-group">
+                    <label asp-for="Id" class="col-12"></label>
+                    <div class="col-md-12">
+                        <input asp-for="Id" readonly class="form-control" />
+                    </div>
+                </div>
+    }
+                <div class="form-group">
+                    <label asp-for="Name" class="col-12"></label>
+                    <div class="col-md-12">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                
+                <div class="form-group pt-3">
+
+                    <div class="col-md-6 offset-md-3">
+                        @if (Model != null && !String.IsNullOrEmpty(Model.Id))
+                        {
+                            <input type="submit" class="btn btn-success w-100" value="Update" />
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn btn-success w-100" value="Create" />
+                        }
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+</form>
