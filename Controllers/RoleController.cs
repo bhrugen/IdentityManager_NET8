@@ -65,6 +65,18 @@ namespace IdentityManager.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(string roleId)
+        {
+            
+                var objFromDb = _db.Roles.FirstOrDefault(u => u.Id == roleId);
+            if (objFromDb != null)
+            {
+                var result = await _roleManager.DeleteAsync(objFromDb);
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
