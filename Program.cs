@@ -1,4 +1,5 @@
 using IdentityManager;
+using IdentityManager.Authorize;
 using IdentityManager.Data;
 using IdentityManager.Models;
 using IdentityManager.Services;
@@ -46,10 +47,13 @@ builder.Services.AddAuthorization(opt =>
                     .RequireClaim("delete", "True")
                  );
 
-    opt.AddPolicy("AdminRole_CreateEditDeleteClaim_ORSuperAdminRole", policy => policy.RequireAssertion(context=>
-        AdminRole_CreateEditDeleteClaim_ORSuperAdminRole(context)
-    ));
+opt.AddPolicy("AdminRole_CreateEditDeleteClaim_ORSuperAdminRole", policy => policy.RequireAssertion(context =>
+    AdminRole_CreateEditDeleteClaim_ORSuperAdminRole(context)
 
+
+
+    ));
+    opt.AddPolicy("OnlySuperAdminChecker", p => p.Requirements.Add(new OnlySuperAdminChecker()));
 });
 
 var app = builder.Build();
