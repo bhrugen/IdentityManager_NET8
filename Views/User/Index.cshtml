@@ -44,6 +44,21 @@
                                         Roles
                                     </a>
                                 </div>
+                                <div class="col-3">
+                                    @if(item.LockoutEnd==null || item.LockoutEnd < DateTime.Now)
+                                    {
+                                        <form asp-action="LockUnlock" asp-route-userId="@item.Id" >
+                                            <input type="submit" class="btn btn-success w-100" style="cursor:pointer" value="Lock" />
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <form asp-action="LockUnlock" asp-route-userId="@item.Id">
+                                            <input type="submit" class="btn btn-warning w-100" style="cursor:pointer" value="UnLock" />
+                                        </form>
+                                    }
+
+                                </div>
                             </div>
                         </td>
                     </tr>
