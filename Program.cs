@@ -1,3 +1,4 @@
+using IdentityManager;
 using IdentityManager.Data;
 using IdentityManager.Models;
 using IdentityManager.Services;
@@ -30,6 +31,10 @@ builder.Services.Configure<IdentityOptions>(opt =>
     opt.Lockout.MaxFailedAccessAttempts = 3;
     opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromDays(10000);
     opt.SignIn.RequireConfirmedEmail = false;
+});
+builder.Services.AddAuthorization(opt =>
+{
+    opt.AddPolicy("Admin", policy => policy.RequireRole(SD.Admin));
 });
 
 var app = builder.Build();

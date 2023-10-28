@@ -27,7 +27,7 @@ namespace IdentityManager.Controllers
             return View();
         }
 
-        [Authorize(Roles = SD.Admin)]
+        [Authorize(Policy = "Admin")]
         //account with role of admin can access
         public IActionResult AdminRoleAccess()
         {
