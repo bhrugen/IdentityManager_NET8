@@ -104,5 +104,32 @@ namespace IdentityManager.Controllers
             TempData[SD.Success] = "Roles assigned successfully";
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LockUnlock(string userId)
+        {
+            ApplicationUser user = _db.ApplicationUser.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            if(user.LockoutEnd !=null && user.LockoutEnd > DateTime.Now)
+            {
+                //user is locked and will remain locked untill lockoutend time
+                //clicking on this action will unlock them
+                user.LockoutEnd = DateTime.Now;
+                TempData[SD.Success] = "User unlocked successfully";
+            }
+            else
+            {
+                //user is not locked, and we want to lock the user
+                user.LockoutEnd = DateTime.Now.AddYears(1000);
+                TempData[SD.Success] = "User locked successfully";
+            }
+            _db.SaveChanges();
+
+           return RedirectToAction(nameof(Index));
+        }
     }
 }
