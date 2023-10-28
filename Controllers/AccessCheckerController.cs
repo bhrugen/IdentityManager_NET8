@@ -48,6 +48,7 @@ namespace IdentityManager.Controllers
             return View();
         }
 
+        [Authorize(Policy = "AdminRole_CreateEditDeleteClaim")]
         //account with admin role and (create & Edit & Delete) Claim can access (AND NOT OR)
         public IActionResult Admin_Create_Edit_DeleteAccess()
         {
