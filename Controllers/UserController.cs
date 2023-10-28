@@ -137,33 +137,33 @@ namespace IdentityManager.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ManageUserClaim(RolesViewModel rolesViewModel)
+        public async Task<IActionResult> ManageUserClaim(ClaimsViewModel claimsViewModel)
         {
-            ApplicationUser user = await _userManager.FindByIdAsync(rolesViewModel.User.Id);
+            ApplicationUser user = await _userManager.FindByIdAsync(claimsViewModel.User.Id);
             if (user == null)
             {
                 return NotFound();
             }
 
-            var oldUserRoles = await _userManager.GetRolesAsync(user);
-            var result = await _userManager.RemoveFromRolesAsync(user, oldUserRoles);
+            var oldClaims = await _userManager.GetClaimsAsync(user);
+            var result = await _userManager.RemoveClaimsAsync(user, oldClaims);
 
             if (!result.Succeeded)
             {
-                TempData[SD.Error] = "Error while removing roles";
-                return View(rolesViewModel);
+                TempData[SD.Error] = "Error while removing claims";
+                return View(claimsViewModel);
             }
 
-            result = await _userManager.AddToRolesAsync(user,
-                rolesViewModel.RolesList.Where(x => x.IsSelected).Select(y => y.RoleName));
+            result = await _userManager.AddClaimsAsync(user,
+                claimsViewModel.ClaimList.Where(x => x.IsSelected).Select(y => new Claim(y.ClaimType,y.IsSelected.ToString())));
 
             if (!result.Succeeded)
             {
-                TempData[SD.Error] = "Error while adding roles";
-                return View(rolesViewModel);
+                TempData[SD.Error] = "Error while adding claims";
+                return View(claimsViewModel);
             }
 
-            TempData[SD.Success] = "Roles assigned successfully";
+            TempData[SD.Success] = "Claims assigned successfully";
             return RedirectToAction(nameof(Index));
         }
 
