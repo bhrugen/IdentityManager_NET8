@@ -27,6 +27,13 @@ namespace IdentityManager.Controllers
             return View();
         }
 
+        [Authorize(Policy = "AdminAndUser")]
+        //account with role of user or admin can access
+        public IActionResult UserANDAdminRoleAccess()
+        {
+            return View();
+        }
+
         [Authorize(Policy = "Admin")]
         //account with role of admin can access
         public IActionResult AdminRoleAccess()

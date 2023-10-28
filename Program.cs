@@ -35,6 +35,7 @@ builder.Services.Configure<IdentityOptions>(opt =>
 builder.Services.AddAuthorization(opt =>
 {
     opt.AddPolicy("Admin", policy => policy.RequireRole(SD.Admin));
+    opt.AddPolicy("AdminAndUser", policy => policy.RequireRole(SD.Admin).RequireRole(SD.User));
 });
 
 var app = builder.Build();
