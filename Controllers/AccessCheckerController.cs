@@ -18,8 +18,8 @@ namespace IdentityManager.Controllers
         }
 
 
-        //account with role of user can access
-        public IActionResult UserRoleAccess()
+        //account with role of user or admin can access
+        public IActionResult UserORAdminRoleAccess()
         {
             return View();
         }
