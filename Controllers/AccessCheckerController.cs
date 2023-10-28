@@ -20,14 +20,14 @@ namespace IdentityManager.Controllers
             return View();
         }
 
-
+        [Authorize(Roles = $"{SD.Admin},{SD.User}")]
         //account with role of user or admin can access
         public IActionResult UserORAdminRoleAccess()
         {
             return View();
         }
 
-
+        [Authorize(Roles = SD.Admin)]
         //account with role of admin can access
         public IActionResult AdminRoleAccess()
         {
