@@ -57,7 +57,15 @@
                                             <input type="submit" class="btn btn-warning w-100" style="cursor:pointer" value="UnLock" />
                                         </form>
                                     }
-
+                                </div>
+                                <div class="col-3">
+                                    <form asp-action="DeleteUser" asp-route-userId="@item.Id">
+                                        <button type="submit"
+                                                onclick="return confirm('Are you sure you want to delete this user?')"
+                                                class="btn btn-danger w-100">
+                                            Delete
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </td>
