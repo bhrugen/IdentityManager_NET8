@@ -1,0 +1,59 @@
+﻿@model ClaimsViewModel
+
+<form method="post">
+    <input asp-for="@Model.User.Id" hidden />
+    <br />
+    <div class="card shadow border-0 mt-4">
+        <div class="card-header bg-success bg-gradient ml-0 py-3">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-white py-2">Manage User Claims</h2>
+                </div>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="border p-2 rounded">
+
+                <div class="form-group">
+                    <label class="col-12">User Name</label>
+                    <div class="col-md-12">
+                        <input asp-for="User.Name" disabled class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-12">User Email</label>
+                    <div class="col-md-12">
+                        <input asp-for="User.Email" disabled class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group mt-3 p-2 border rounded">
+                    <span>Roles Assignment</span>
+                    @for (int i = 0; i < Model.ClaimList.Count; i++)
+                    {
+                        <div class="m-2 form-check">
+                            <input asp-for="@Model.ClaimList[i].ClaimType" hidden />
+                            <input asp-for="@Model.ClaimList[i].IsSelected" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@Model.ClaimList[i].IsSelected">
+                                @Model.ClaimList[i].ClaimType
+                            </label>
+                        </div>
+                    }
+
+                </div>
+
+
+                <div class="form-group pt-3 row">
+                    <div class="col-md-6">
+                        <a class="btn btn-secondary w-100" asp-action="Index">Back to List</a>
+                    </div>
+                    <div class="col-md-6 ">
+                        <input type="submit" class="btn btn-success w-100" value="Update" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
