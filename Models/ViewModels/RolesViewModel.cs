@@ -7,7 +7,7 @@
             RolesList = [];
         }
         public ApplicationUser User { get; set; }
-        public IEnumerable<RoleSelection> RolesList { get; set; }
+        public List<RoleSelection> RolesList { get; set; }
     }
 
 

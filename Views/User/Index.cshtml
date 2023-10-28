@@ -37,7 +37,15 @@
                         <td>
                             @item.Role
                         </td>
-                        <td></td>
+                        <td style="width:450px;">
+                            <div class="row">
+                                <div class="col-3">
+                                    <a asp-action="ManageRole" asp-route-userId="@item.Id" class="btn btn-primary w-100" style="cursor:pointer">
+                                        Roles
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                 }
             </table>
