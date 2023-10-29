@@ -62,6 +62,12 @@ opt.AddPolicy("AdminRole_CreateEditDeleteClaim_ORSuperAdminRole", policy => poli
     opt.AddPolicy("FirstNameAuth", p => p.Requirements.Add(new FirstNameAuthRequirement("test")));
 });
 
+builder.Services.AddAuthentication().AddMicrosoftAccount(opt =>
+{
+    opt.ClientId = "56c4d54d-5916-4e65-9d2e-f15c77f2513f";
+    opt.ClientSecret = "bif8Q~8Xr5peBI3HKrAtARdWH4N2rfxGTmPCla2C";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
