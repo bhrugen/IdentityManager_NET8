@@ -67,5 +67,11 @@ namespace IdentityManager.Controllers
         {
             return View();
         }
+
+        [Authorize(Policy = "FirstNameAuth")]
+        public IActionResult FirstNameAuth()
+        {
+            return View();
+        }
     }
 }
