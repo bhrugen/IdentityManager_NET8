@@ -23,6 +23,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<INumberOfDaysForAccount, NumberOfDaysForAccount>();
+builder.Services.AddScoped<IAuthorizationHandler,AdminWithOver1000DaysHandler>();
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.AccessDeniedPath = new PathString("/Account/NoAccess");
@@ -55,6 +56,8 @@ opt.AddPolicy("AdminRole_CreateEditDeleteClaim_ORSuperAdminRole", policy => poli
 
     ));
     opt.AddPolicy("OnlySuperAdminChecker", p => p.Requirements.Add(new OnlySuperAdminChecker()));
+
+    opt.AddPolicy("AdminWithMoreThan1000Days", p => p.Requirements.Add(new AdminWithMoreThan1000DaysRequirement(1000)));
 });
 
 var app = builder.Build();
