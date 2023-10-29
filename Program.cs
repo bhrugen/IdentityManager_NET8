@@ -3,6 +3,7 @@ using IdentityManager.Authorize;
 using IdentityManager.Data;
 using IdentityManager.Models;
 using IdentityManager.Services;
+using IdentityManager.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -21,7 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
-
+builder.Services.AddScoped<INumberOfDaysForAccount, NumberOfDaysForAccount>();
 builder.Services.ConfigureApplicationCookie(opt =>
 {
     opt.AccessDeniedPath = new PathString("/Account/NoAccess");
