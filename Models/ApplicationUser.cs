@@ -8,6 +8,7 @@ namespace IdentityManager.Models
     {
         [Required]
         public string Name { get; set; }
+        public DateTime DateCreated { get; set; }
         [NotMapped]
         public string RoleId { get; set; }
         [NotMapped]
