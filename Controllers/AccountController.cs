@@ -397,6 +397,53 @@ namespace IdentityManager.Controllers
             return Challenge(properties, provider);
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExternalLoginCallback(string returnurl = null, string remoteError=null)
+        {
+            returnurl = returnurl ?? Url.Content("~/");
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                return View(nameof(Login));
+            }
+
+            var info = await _signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+
+            //sign in the user with this external login provider. only if they have a login
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey,
+                               isPersistent: false, bypassTwoFactor: true);
+            if (result.Succeeded)
+            {
+                await _signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                return LocalRedirect(returnurl);
+            }
+            if (result.RequiresTwoFactor)
+            {
+                return RedirectToAction(nameof(VerifyAuthenticatorCode), new { returnurl });
+            }
+            else
+            {
+                //that means user account is not create and we will display a view to create an account
+
+                ViewData["ReturnUrl"] = returnurl;
+                ViewData["ProviderDisplayName"] = info.ProviderDisplayName;
+
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
+                {
+                    Email = "",
+                    Name = ""
+                });
+            }
+
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
