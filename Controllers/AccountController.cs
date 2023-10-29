@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 using System.Text.Encodings.Web;
 
 namespace IdentityManager.Controllers
@@ -390,9 +391,9 @@ namespace IdentityManager.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        public IActionResult ExternalLogin(string provider, string returnurl = null)
         {
-            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { returnUrl });
+            var redirectUrl = Url.Action("ExternalLoginCallback", "Account", new { returnurl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
         }
@@ -400,7 +401,6 @@ namespace IdentityManager.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ExternalLoginCallback(string returnurl = null, string remoteError=null)
         {
             returnurl = returnurl ?? Url.Content("~/");
@@ -437,8 +437,8 @@ namespace IdentityManager.Controllers
 
                 return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel
                 {
-                    Email = "",
-                    Name = ""
+                    Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                    Name = info.Principal.FindFirstValue(ClaimTypes.Name)
                 });
             }
 
