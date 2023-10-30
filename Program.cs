@@ -68,6 +68,12 @@ builder.Services.AddAuthentication().AddMicrosoftAccount(opt =>
     opt.ClientSecret = "bif8Q~8Xr5peBI3HKrAtARdWH4N2rfxGTmPCla2C";
 });
 
+builder.Services.AddAuthentication().AddFacebook(opt =>
+{
+    opt.ClientId = "295971389929157";
+    opt.ClientSecret = "eb362b2ee1a2888a83f961fa58853752";
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
